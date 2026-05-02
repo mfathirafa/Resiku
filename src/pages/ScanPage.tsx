@@ -4,8 +4,13 @@ import { supabase } from '../services/supabase';
 import { useAuth } from '../hooks/useAuth';
 
 export default function ScanPage() {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/login');
+  };
   
   // File states
   const [file, setFile] = useState<File | null>(null);
@@ -114,8 +119,9 @@ export default function ScanPage() {
 
     try {
       // 1. Upload File ke Storage
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${user.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      // Membuang karakter aneh dari nama file asli
+      const cleanFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_');
+      const fileName = `${user.id}/${Date.now()}_${cleanFileName}`;
       
       const { error: uploadError } = await supabase.storage
         .from('receipts')
@@ -207,6 +213,12 @@ export default function ScanPage() {
               <div className="hidden sm:block text-sm font-medium text-slate-700">
                 Halo, {user?.user_metadata?.full_name || user?.email?.split('@')[0]}
               </div>
+              <button 
+                onClick={handleLogout}
+                className="text-sm font-medium text-slate-500 hover:text-rose-600 transition-colors px-3 py-2 rounded-lg hover:bg-rose-50 hidden sm:block"
+              >
+                Keluar
+              </button>
             </div>
           </div>
         </div>
