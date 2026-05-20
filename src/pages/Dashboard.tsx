@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { Bell, ChevronDown, ChevronRight, FileText, Calendar, AlertTriangle, ClipboardList, Car, Trash2, Wrench, Receipt, CheckCircle, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useNotifications } from '../hooks/useNotifications';
+import AdBanner from '../components/AdBanner';
 
 function getDaysLeft(dateStr: string) {
   if (!dateStr) return 999;
@@ -281,6 +282,9 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
+
+      {/* Ad Placement */}
+      <AdBanner type="horizontal" className="mx-5 mt-4" />
 
       {/* Upcoming Section */}
       <div className="mt-4">

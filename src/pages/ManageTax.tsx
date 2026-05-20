@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { useLegalDocs } from '../hooks/useLegalDocs';
 import { useAuth } from '../context/AuthContext';
 import { useNotifications } from '../hooks/useNotifications';
+import AdBanner from '../components/AdBanner';
 
 function getDaysLeft(dateStr: string) {
   if (!dateStr) return 999;
@@ -288,13 +289,13 @@ export default function ManageTax() {
             <p className="text-gray-450 text-xs mt-1">Silakan tambah dokumen baru dengan tombol plus.</p>
           </div>
         ) : (
-          filteredDocs.map((doc) => {
+          filteredDocs.flatMap((doc, idx) => {
             const daysLeft = getDaysLeft(doc.expiry_date);
             const category = getCategoryDetails(doc.category);
             const status = getStatusDetails(daysLeft);
             const isExpired = daysLeft < 0;
 
-            return (
+            const card = (
               <div 
                 key={doc.id} 
                 className={`bg-white rounded-3xl border border-gray-100 p-5 shadow-sm hover:border-gray-200 transition-all flex flex-col ${
@@ -339,6 +340,14 @@ export default function ManageTax() {
                 </div>
               </div>
             );
+
+            if (idx === 1) {
+              return [
+                card,
+                <AdBanner key="tax-list-ad" type="inline" className="mt-1 mb-1" />
+              ];
+            }
+            return [card];
           })
         )}
       </div>

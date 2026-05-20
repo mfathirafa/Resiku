@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import { useServices } from '../hooks/useServices';
 import { useAuth } from '../context/AuthContext';
 import { useNotifications } from '../hooks/useNotifications';
+import AdBanner from '../components/AdBanner';
 
 function getDaysLeft(dateStr: string) {
   if (!dateStr) return 999;
@@ -355,13 +356,13 @@ export default function ManageService() {
           </div>
         ) : (
           <div className="space-y-3 pb-6">
-            {filteredServices.map((svc) => {
+            {filteredServices.flatMap((svc, idx) => {
               const daysLeft = getDaysLeft(svc.next_service_date);
               const category = getAssetDetails(svc.name);
               const isOverdue = daysLeft < 0;
               const isWarning = daysLeft >= 0 && daysLeft <= 30;
 
-              return (
+              const card = (
                 <div 
                   key={svc.id} 
                   onClick={() => openEditModal(svc)}
@@ -419,6 +420,14 @@ export default function ManageService() {
                   </div>
                 </div>
               );
+
+              if (idx === 1) {
+                return [
+                  card,
+                  <AdBanner key="service-list-ad" type="inline" className="mt-1 mb-1" />
+                ];
+              }
+              return [card];
             })}
           </div>
         )}

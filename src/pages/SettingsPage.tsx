@@ -21,6 +21,7 @@ import { useProfile } from '../hooks/useProfile';
 import { useNotifications } from '../hooks/useNotifications';
 import { Link } from 'react-router-dom';
 import { supabase } from '../services/supabase';
+import AdBanner from '../components/AdBanner';
 
 export default function SettingsPage() {
   const { user, signOut } = useAuth();
@@ -459,9 +460,11 @@ export default function SettingsPage() {
             className="inline-block bg-white hover:bg-indigo-50 text-indigo-700 text-[10px] font-extrabold px-5 py-2.5 rounded-xl shadow-sm hover:scale-105 active:scale-95 transition-all relative z-10"
           >
             Unlock Now
-          </Link>
         </div>
       )}
+
+      {/* Ad Placement */}
+      <AdBanner type="horizontal" className="mx-5 mt-6" />
 
       {/* Section: BASIC INFORMATION */}
       <span className="text-[10px] font-extrabold text-gray-400 tracking-wider px-5 mt-7 mb-3 block shrink-0">

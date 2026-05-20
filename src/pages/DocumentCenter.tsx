@@ -22,6 +22,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useLegalDocs } from '../hooks/useLegalDocs';
 import { useAuth } from '../context/AuthContext';
 import { useNotifications } from '../hooks/useNotifications';
+import AdBanner from '../components/AdBanner';
 
 function formatDate(dateStr: string) {
   if (!dateStr) return '-';
@@ -359,11 +360,11 @@ export default function DocumentCenter() {
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-4">
-            {filteredDocs.map((doc) => {
+            {filteredDocs.flatMap((doc, idx) => {
               const visuals = getDocVisuals(doc.category, doc.name);
               const isExpired = doc.expiry_date ? new Date(doc.expiry_date).getTime() < new Date().getTime() : false;
 
-              return (
+              const card = (
                 <div 
                   key={doc.id}
                   onClick={() => openEditModal(doc)}
@@ -412,6 +413,16 @@ export default function DocumentCenter() {
                   )}
                 </div>
               );
+
+              if (idx === 1) {
+                return [
+                  card,
+                  <div key="doc-center-ad" className="col-span-2 mt-1 mb-1">
+                    <AdBanner type="inline" />
+                  </div>
+                ];
+              }
+              return [card];
             })}
           </div>
         )}

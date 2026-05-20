@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import { useBills } from '../hooks/useBills';
 import { useAuth } from '../context/AuthContext';
 import { useNotifications } from '../hooks/useNotifications';
+import AdBanner from '../components/AdBanner';
 
 function getDaysLeft(dateStr: string) {
   if (!dateStr) return 999;
@@ -364,7 +365,7 @@ export default function ManageBills() {
           </div>
         ) : (
           <div className="space-y-3 pb-6">
-            {filteredBills.map((bill) => {
+            {filteredBills.flatMap((bill, idx) => {
               const daysLeft = getDaysLeft(bill.due_date);
               const category = getCategoryDetails(bill.name, bill.category);
               const isPaid = bill.status === 'paid';
@@ -375,7 +376,7 @@ export default function ManageBills() {
               const lowerName = bill.name.toLowerCase();
               const isPayStyle = lowerName.includes('pln') || lowerName.includes('listrik') || lowerName.includes('cicilan') || lowerName.includes('rumah') || lowerName.includes('kredit');
 
-              return (
+              const card = (
                 <div 
                   key={bill.id} 
                   onClick={() => openEditModal(bill)}
@@ -450,6 +451,14 @@ export default function ManageBills() {
                   </div>
                 </div>
               );
+
+              if (idx === 1) {
+                return [
+                  card,
+                  <AdBanner key="bills-list-ad" type="inline" className="mt-1 mb-1" />
+                ];
+              }
+              return [card];
             })}
           </div>
         )}
