@@ -45,13 +45,9 @@ export default function LoginPage(): JSX.Element {
         <div className="absolute top-1/2 -left-8 w-32 h-32 bg-violet-200 opacity-30 rounded-full blur-2xl" />
 
         <div className="relative z-10 flex flex-col items-center text-center">
-          <div className="mb-4 animate-bounce" style={{ animationDuration: '3000ms' }}>
-            <div className="w-24 h-24 rounded-3xl bg-white shadow-2xl flex items-center justify-center border border-gray-100/60">
-              <div className="w-14 h-14 bg-indigo-700 rounded-2xl flex items-center justify-center shadow-lg">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
-              </div>
+          <div className="mb-6 animate-bounce" style={{ animationDuration: '3000ms' }}>
+            <div className="w-36 h-36 rounded-[2rem] bg-white shadow-2xl flex items-center justify-center border border-gray-100/60 overflow-hidden">
+              <img src="/logo.png" alt="Ingetin Logo" className="w-[120%] h-[120%] object-contain" />
             </div>
           </div>
 
